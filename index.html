@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Donald Van Marcke - Change Management & Digital Transformation Professional">
+  <title>Donald Van Marcke | Interactive Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body, #root { height: 100%; width: 100%; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .animate-bounce { animation: bounce 1s infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(-25%) translateX(-50%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+      50% { transform: translateY(0) translateX(-50%); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    function BikeResume() {
+      const [scrollProgress, setScrollProgress] = useState(0);
+      const [scrollY, setScrollY] = useState(0);
+      const [pedalRotation, setPedalRotation] = useState(0);
+      const containerRef = useRef(null);
+      
+      useEffect(() => {
+        const handleScroll = () => {
+          if (containerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+            const progress = scrollTop / (scrollHeight - clientHeight);
+            setScrollProgress(progress);
+            setScrollY(scrollTop);
+            setPedalRotation(scrollTop * 1.5);
+          }
+        };
+        const container = containerRef.current;
+        if (container) {
+          container.addEventListener('scroll', handleScroll);
+          return () => container.removeEventListener('scroll', handleScroll);
+        }
+      }, []);
+
+      const bikeY = 100 + scrollY * 0.15;
+      const wheelRotation = pedalRotation * 2;
+
+      const BikeWithChildSeat = ({ scale = 1 }) => (
+        <svg width={140 * scale} height={100 * scale} viewBox="0 0 140 100">
+          <g transform={`rotate(${wheelRotation}, 30, 70)`}>
+            <circle cx="30" cy="70" r="18" fill="none" stroke="#2d3748" strokeWidth="2.5"/>
+            <circle cx="30" cy="70" r="12" fill="none" stroke="#a0aec0" strokeWidth="0.5"/>
+            {[0,45,90,135].map(a => <line key={a} x1="30" y1="52" x2="30" y2="88" stroke="#a0aec0" strokeWidth="0.5" transform={`rotate(${a},30,70)`}/>)}
+          </g>
+          <g transform={`rotate(${wheelRotation}, 105, 70)`}>
+            <circle cx="105" cy="70" r="18" fill="none" stroke="#2d3748" strokeWidth="2.5"/>
+            <circle cx="105" cy="70" r="12" fill="none" stroke="#a0aec0" strokeWidth="0.5"/>
+            {[0,45,90,135].map(a => <line key={a} x1="105" y1="52" x2="105" y2="88" stroke="#a0aec0" strokeWidth="0.5" transform={`rotate(${a},105,70)`}/>)}
+          </g>
+          <path d="M30,70 L55,42 L55,70 L30,70" fill="none" stroke="#1a365d" strokeWidth="2.5" strokeLinejoin="round"/>
+          <line x1="55" y1="70" x2="105" y2="70" stroke="#1a365d" strokeWidth="2.5"/>
+          <line x1="55" y1="42" x2="90" y2="42" stroke="#1a365d" strokeWidth="2"/>
+          <line x1="90" y1="42" x2="105" y2="70" stroke="#1a365d" strokeWidth="2.5"/>
+          <line x1="90" y1="30" x2="90" y2="45" stroke="#4a5568" strokeWidth="2"/>
+          <line x1="82" y1="30" x2="98" y2="30" stroke="#4a5568" strokeWidth="2"/>
+          <line x1="55" y1="42" x2="55" y2="28" stroke="#4a5568" strokeWidth="2"/>
+          <ellipse cx="55" cy="25" rx="8" ry="3" fill="#4a5568"/>
+          <g transform={`rotate(${pedalRotation}, 55, 70)`}>
+            <circle cx="55" cy="70" r="5" fill="#4a5568"/>
+            <line x1="55" y1="62" x2="55" y2="78" stroke="#2d3748" strokeWidth="2"/>
+            <rect x="51" y="59" width="8" height="3" rx="1" fill="#2d3748"/>
+            <rect x="51" y="78" width="8" height="3" rx="1" fill="#2d3748"/>
+          </g>
+          <rect x="18" y="38" width="24" height="28" rx="4" fill="#e53e3e" stroke="#c53030" strokeWidth="1"/>
+          <rect x="20" y="40" width="20" height="12" rx="2" fill="#fc8181"/>
+          <line x1="18" y1="52" x2="42" y2="52" stroke="#c53030" strokeWidth="1"/>
+          <circle cx="30" cy="35" r="7" fill="#fbd38d"/>
+          <circle cx="27" cy="33" r="1.5" fill="#2d3748"/>
+          <circle cx="33" cy="33" r="1.5" fill="#2d3748"/>
+          <path d="M27,37 Q30,40 33,37" stroke="#2d3748" strokeWidth="1" fill="none"/>
+          <ellipse cx="30" cy="28" rx="8" ry="5" fill="#9f7aea"/>
+          <rect x="25" y="42" width="10" height="12" rx="2" fill="#48bb78"/>
+          <circle cx="60" cy="12" r="9" fill="#fbd38d"/>
+          <circle cx="57" cy="10" r="2" fill="#2d3748"/>
+          <circle cx="63" cy="10" r="2" fill="#2d3748"/>
+          <path d="M56,15 Q60,19 64,15" stroke="#2d3748" strokeWidth="1.5" fill="none"/>
+          <ellipse cx="60" cy="4" rx="10" ry="6" fill="#4a5568"/>
+          <path d="M55,20 L50,28 L70,28 L65,20" fill="#3182ce"/>
+          <line x1="52" y1="26" x2="85" y2="32" stroke="#3182ce" strokeWidth="4"/>
+          <line x1="60" y1="28" x2="55" y2="62" stroke="#3182ce" strokeWidth="3"/>
+        </svg>
+      );
+
+      const Sun = () => (
+        <div className="fixed top-8 right-12 z-30" style={{transform: `rotate(${scrollY * 0.01}deg)`}}>
+          <svg width="70" height="70" viewBox="0 0 70 70">
+            <circle cx="35" cy="35" r="16" fill="#fbbf24"/>
+            {[0,30,60,90,120,150,180,210,240,270,300,330].map(angle => (
+              <line key={angle} x1="35" y1="35" x2={35 + 30 * Math.cos(angle * Math.PI / 180)} y2={35 + 30 * Math.sin(angle * Math.PI / 180)} stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round" opacity="0.8"/>
+            ))}
+          </svg>
+        </div>
+      );
+
+      const Cloud = ({ left, top, speed = 1, size = 1 }) => (
+        <div className="fixed z-10 pointer-events-none" style={{left: `${(left + (scrollY * 0.015 * speed)) % 120 - 10}%`, top: `${top}px`, transform: `scale(${size})`}}>
+          <svg width="100" height="50" viewBox="0 0 100 50">
+            <ellipse cx="30" cy="35" rx="25" ry="15" fill="white" opacity="0.9"/>
+            <ellipse cx="55" cy="30" rx="30" ry="20" fill="white" opacity="0.9"/>
+            <ellipse cx="75" cy="35" rx="20" ry="12" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+      );
+
+      const Building = ({ x, height, width, color }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 5 }}>
+          <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+            <rect x="0" y="0" width={width} height={height} fill={color}/>
+            {Array.from({length: Math.floor(height/28)}).map((_, row) =>
+              Array.from({length: Math.floor(width/20)}).map((_, col) => (
+                <rect key={`${row}-${col}`} x={5 + col * 18} y={10 + row * 24} width="10" height="14" fill={Math.random() > 0.35 ? "#fef3c7" : color}/>
+              ))
+            )}
+          </svg>
+        </div>
+      );
+
+      const OfficeBuilding = ({ x, height, width, color, hasAntenna = false }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 5 }}>
+          <svg width={width} height={height + 20} viewBox={`0 0 ${width} ${height + 20}`}>
+            {hasAntenna && <rect x={width/2 - 2} y="0" width="4" height="20" fill="#4a5568"/>}
+            <rect x="0" y="20" width={width} height={height} fill={color}/>
+            {Array.from({length: Math.floor(height/24)}).map((_, row) =>
+              Array.from({length: Math.floor(width/16)}).map((_, col) => (
+                <rect key={`${row}-${col}`} x={4 + col * 14} y={28 + row * 22} width="8" height="12" fill={Math.random() > 0.3 ? "#93c5fd" : "#1e3a5f"}/>
+              ))
+            )}
+          </svg>
+        </div>
+      );
+
+      const BankBuilding = ({ x }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 6 }}>
+          <svg width="110" height="130" viewBox="0 0 110 130">
+            <rect x="10" y="38" width="90" height="92" fill="#1a365d"/>
+            <polygon points="55,6 10,38 100,38" fill="#2c5282"/>
+            {[0,1,2,3].map(col => [0,1,2].map(row => (
+              <rect key={`${col}-${row}`} x={18 + col * 22} y={48 + row * 26} width="14" height="18" fill="#90cdf4"/>
+            )))}
+            <rect x="42" y="105" width="26" height="25" fill="#2d3748"/>
+            <circle cx="64" cy="117" r="2.5" fill="#ffd700"/>
+            <text x="55" y="28" textAnchor="middle" fill="#ffd700" fontSize="9" fontWeight="bold">BANK</text>
+          </svg>
+        </div>
+      );
+
+      const Computer = ({ x, y }) => (
+        <div className="absolute" style={{ left: `${x}%`, bottom: `${y}px`, zIndex: 7 }}>
+          <svg width="36" height="32" viewBox="0 0 36 32">
+            <rect x="4" y="0" width="28" height="20" rx="2" fill="#2d3748"/>
+            <rect x="6" y="2" width="24" height="14" fill="#1a202c"/>
+            <rect x="14" y="20" width="8" height="5" fill="#4a5568"/>
+            <rect x="10" y="25" width="16" height="3" rx="1" fill="#4a5568"/>
+            <text x="18" y="12" textAnchor="middle" fill="#48bb78" fontSize="6" fontFamily="monospace">&gt;_</text>
+          </svg>
+        </div>
+      );
+
+      const TrainStation = ({ x }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 6 }}>
+          <svg width="150" height="110" viewBox="0 0 150 110">
+            <rect x="10" y="38" width="130" height="72" fill="#4a5568"/>
+            <polygon points="75,6 8,40 142,40" fill="#2d3748"/>
+            <rect x="58" y="72" width="34" height="38" fill="#1a202c"/>
+            <rect x="20" y="50" width="30" height="20" fill="#63b3ed"/>
+            <rect x="100" y="50" width="30" height="20" fill="#63b3ed"/>
+            <circle cx="75" cy="28" r="10" fill="white"/>
+            <text x="75" y="66" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold">SNCB</text>
+          </svg>
+        </div>
+      );
+
+      const Train = ({ x, direction = 1 }) => (
+        <div className="absolute bottom-20" style={{ left: `${(x + (scrollY * 0.04 * direction)) % 140 - 25}%`, zIndex: 15, transform: `scaleX(${direction})`}}>
+          <svg width="200" height="120" viewBox="0 0 200 120">
+            <ellipse cx="175" cy="15" rx="12" ry="10" fill="#e2e8f0" opacity="0.8"/>
+            <ellipse cx="185" cy="25" rx="8" ry="6" fill="#e2e8f0" opacity="0.6"/>
+            <rect x="160" y="20" width="16" height="30" fill="#1e293b"/>
+            <rect x="156" y="15" width="24" height="8" fill="#334155"/>
+            <rect x="10" y="40" width="170" height="55" rx="8" fill="#dc2626"/>
+            <rect x="155" y="30" width="35" height="65" rx="5" fill="#b91c1c"/>
+            <rect x="20" y="50" width="30" height="25" rx="3" fill="#bfdbfe"/>
+            <rect x="58" y="50" width="30" height="25" rx="3" fill="#bfdbfe"/>
+            <rect x="96" y="50" width="30" height="25" rx="3" fill="#bfdbfe"/>
+            <rect x="10" y="85" width="170" height="10" fill="#991b1b"/>
+            <circle cx="162" cy="60" r="15" fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"/>
+            <circle cx="40" cy="105" r="14" fill="#1e293b" stroke="#374151" strokeWidth="3"/>
+            <circle cx="85" cy="105" r="14" fill="#1e293b" stroke="#374151" strokeWidth="3"/>
+            <circle cx="130" cy="105" r="14" fill="#1e293b" stroke="#374151" strokeWidth="3"/>
+            <circle cx="172" cy="105" r="14" fill="#1e293b" stroke="#374151" strokeWidth="3"/>
+            <circle cx="40" cy="105" r="5" fill="#4b5563"/>
+            <circle cx="85" cy="105" r="5" fill="#4b5563"/>
+            <circle cx="130" cy="105" r="5" fill="#4b5563"/>
+            <circle cx="172" cy="105" r="5" fill="#4b5563"/>
+            <polygon points="0,95 10,70 10,95" fill="#991b1b"/>
+          </svg>
+        </div>
+      );
+
+      const Office = ({ x, variant = 0 }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 6 }}>
+          <svg width="90" height="100" viewBox="0 0 90 100">
+            <rect x="5" y="18" width="80" height="82" fill={variant === 0 ? "#718096" : "#a0aec0"}/>
+            <rect x="0" y="12" width="90" height="10" fill={variant === 0 ? "#4a5568" : "#718096"}/>
+            {[0,1,2].map(col => [0,1,2].map(row => (
+              <rect key={`${col}-${row}`} x={14 + col * 24} y={28 + row * 24} width="16" height="14" fill={Math.random() > 0.45 ? "#faf089" : "#2d3748"}/>
+            )))}
+            <rect x="35" y="72" width="20" height="28" fill="#2d3748"/>
+          </svg>
+        </div>
+      );
+
+      const Chatbot = ({ x, y }) => (
+        <div className="absolute" style={{ left: `${x}%`, bottom: `${y}px`, zIndex: 8 }}>
+          <svg width="45" height="55" viewBox="0 0 45 55">
+            <rect x="5" y="10" width="35" height="32" rx="7" fill="#4299e1"/>
+            <circle cx="15" cy="24" r="4.5" fill="white"/>
+            <circle cx="30" cy="24" r="4.5" fill="white"/>
+            <circle cx="15" cy="24" r="2" fill="#1a202c"/>
+            <circle cx="30" cy="24" r="2" fill="#1a202c"/>
+            <path d="M13,33 Q22.5,40 32,33" stroke="white" strokeWidth="2" fill="none"/>
+            <rect x="18" y="0" width="9" height="11" fill="#a0aec0"/>
+            <circle cx="22.5" cy="2" r="4.5" fill="#48bb78"/>
+            <rect x="10" y="42" width="25" height="7" rx="2" fill="#a0aec0"/>
+          </svg>
+        </div>
+      );
+
+      const Tree = ({ x, size = 1, variant = 0 }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 4, transform: `scale(${size})` }}>
+          <svg width="36" height="62" viewBox="0 0 36 62">
+            <rect x="14" y="42" width="8" height="20" fill="#92400e"/>
+            <polygon points="18,0 3,42 33,42" fill={variant === 0 ? "#228B22" : "#2d5a27"}/>
+          </svg>
+        </div>
+      );
+
+      const ClassicalSchool = ({ x, variant = 0 }) => (
+        <div className="absolute bottom-0" style={{ left: `${x}%`, zIndex: 6 }}>
+          <svg width="140" height="130" viewBox="0 0 140 130">
+            <rect x="10" y="45" width="120" height="85" fill={variant === 0 ? "#d4a574" : "#c9a67a"}/>
+            <polygon points="70,10 5,50 135,50" fill={variant === 0 ? "#92400e" : "#7c3d10"}/>
+            <polygon points="70,18 15,48 125,48" fill={variant === 0 ? "#b8956e" : "#a67c52"}/>
+            <rect x="22" y="55" width="10" height="75" fill="#f5f5f4"/>
+            <rect x="48" y="55" width="10" height="75" fill="#f5f5f4"/>
+            <rect x="82" y="55" width="10" height="75" fill="#f5f5f4"/>
+            <rect x="108" y="55" width="10" height="75" fill="#f5f5f4"/>
+            <rect x="19" y="52" width="16" height="6" fill="#e7e5e4"/>
+            <rect x="45" y="52" width="16" height="6" fill="#e7e5e4"/>
+            <rect x="79" y="52" width="16" height="6" fill="#e7e5e4"/>
+            <rect x="105" y="52" width="16" height="6" fill="#e7e5e4"/>
+            <rect x="35" y="65" width="14" height="22" fill="#fef3c7"/>
+            <rect x="63" y="65" width="14" height="22" fill="#fef3c7"/>
+            <rect x="91" y="65" width="14" height="22" fill="#fef3c7"/>
+            <rect x="55" y="95" width="30" height="35" fill="#7c2d12"/>
+            <rect x="55" y="95" width="30" height="5" fill="#92400e"/>
+            <circle cx="80" cy="115" r="2" fill="#fbbf24"/>
+            <rect x="45" y="125" width="50" height="5" fill="#d6d3d1"/>
+            <circle cx="70" cy="32" r="8" fill="#fef3c7"/>
+          </svg>
+        </div>
+      );
+
+      const Ground = () => (
+        <div className="absolute bottom-0 left-0 right-0 h-16 z-10">
+          <svg width="100%" height="100%" preserveAspectRatio="none">
+            <rect width="100%" height="100%" fill="#90EE90"/>
+            <rect y="0" width="100%" height="6" fill="#228B22"/>
+          </svg>
+        </div>
+      );
+
+      const Road = () => (
+        <div className="absolute bottom-12 left-0 right-0 h-6 z-10">
+          <svg width="100%" height="100%" preserveAspectRatio="none">
+            <rect width="100%" height="100%" fill="#4a5568"/>
+            <line x1="0" y1="12" x2="100%" y2="12" stroke="#fbbf24" strokeWidth="2" strokeDasharray="18,14"/>
+          </svg>
+        </div>
+      );
+
+      const FlagNL = () => (
+        <svg width="48" height="32" viewBox="0 0 48 32" className="rounded shadow-sm">
+          <rect width="48" height="10.67" fill="#AE1C28"/>
+          <rect y="10.67" width="48" height="10.67" fill="#FFFFFF"/>
+          <rect y="21.33" width="48" height="10.67" fill="#21468B"/>
+        </svg>
+      );
+
+      const FlagUK = () => (
+        <svg width="48" height="32" viewBox="0 0 48 32" className="rounded shadow-sm">
+          <rect width="48" height="32" fill="#012169"/>
+          <path d="M0,0 L48,32 M48,0 L0,32" stroke="#FFFFFF" strokeWidth="6"/>
+          <path d="M0,0 L48,32 M48,0 L0,32" stroke="#C8102E" strokeWidth="2"/>
+          <path d="M24,0 V32 M0,16 H48" stroke="#FFFFFF" strokeWidth="10"/>
+          <path d="M24,0 V32 M0,16 H48" stroke="#C8102E" strokeWidth="6"/>
+        </svg>
+      );
+
+      const FlagFR = () => (
+        <svg width="48" height="32" viewBox="0 0 48 32" className="rounded shadow-sm">
+          <rect width="16" height="32" fill="#002395"/>
+          <rect x="16" width="16" height="32" fill="#FFFFFF"/>
+          <rect x="32" width="16" height="32" fill="#ED2939"/>
+        </svg>
+      );
+
+      const FlagBR = () => (
+        <svg width="48" height="32" viewBox="0 0 48 32" className="rounded shadow-sm">
+          <rect width="48" height="32" fill="#009739"/>
+          <polygon points="24,3 45,16 24,29 3,16" fill="#FEDD00"/>
+          <circle cx="24" cy="16" r="8" fill="#002776"/>
+          <path d="M16,16 Q24,12 32,16" stroke="#FFFFFF" strokeWidth="1.5" fill="none"/>
+        </svg>
+      );
+
+      const DownloadIcon = () => (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      );
+
+      const Section = ({ title, children, subtitle }) => (
+        <div className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-slate-800 mb-1">{title}</h2>
+            {subtitle && <p className="text-slate-500 text-sm">{subtitle}</p>}
+          </div>
+          {children}
+        </div>
+      );
+
+      const SceneWrapper = ({ children, height = "700px" }) => (
+        <div className="relative w-full overflow-hidden" style={{ height, minHeight: height }}>
+          <Ground />
+          <Road />
+          {children}
+        </div>
+      );
+
+      return (
+        <div ref={containerRef} className="h-screen overflow-y-auto">
+          <div className="fixed inset-0 bg-gradient-to-b from-sky-400 via-sky-300 to-sky-100 z-0" />
+          <Sun />
+          <Cloud left={5} top={50} speed={0.4} size={1.2} />
+          <Cloud left={35} top={100} speed={0.7} size={1} />
+          <Cloud left={60} top={35} speed={0.3} size={1.1} />
+          <Cloud left={80} top={130} speed={0.5} size={0.85} />
+          <Cloud left={20} top={160} speed={0.6} size={0.9} />
+
+          <div className="fixed left-14 top-0 h-full w-1.5 bg-white/40 z-20 rounded-full overflow-hidden">
+            <div className="w-full bg-emerald-500 transition-all duration-200 rounded-full" style={{ height: `${scrollProgress * 45}%` }}/>
+          </div>
+          
+          <div className="fixed left-2 z-40 transition-all duration-100" style={{ top: `${Math.min(bikeY, 550)}px` }}>
+            <BikeWithChildSeat scale={0.9} />
+          </div>
+
+          {scrollProgress < 0.03 && (
+            <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 text-slate-700 text-sm animate-bounce z-50 bg-white/90 px-5 py-2.5 rounded-full shadow-lg">
+              ↓ Scroll to bike through my journey ↓
+            </div>
+          )}
+
+          <div className="relative z-20 ml-36 mr-8 py-12 max-w-4xl">
+            
+            {/* SUMMARY */}
+            <SceneWrapper height="100vh">
+              <Tree x={6} size={1.2} />
+              <Tree x={14} size={0.85} variant={1} />
+              <Tree x={84} size={1} />
+              <Tree x={93} size={1.3} variant={1} />
+              
+              <div className="relative z-20 flex flex-col justify-center h-full pb-32">
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-10 shadow-xl">
+                  <p className="text-emerald-600 text-sm font-semibold tracking-widest uppercase mb-3">My Journey So Far</p>
+                  <h1 className="text-5xl font-bold text-slate-800 mb-3">Donald Van Marcke</h1>
+                  <p className="text-xl text-slate-600 mb-6">Change Management · Digital Transformation · Communications</p>
+                  
+                  <div className="flex flex-wrap gap-6 text-sm text-slate-500 mb-8">
+                    <span>📧 vanmarckedonald@gmail.com</span>
+                    <span>📱 +32 486 093 411</span>
+                    <span>🔗 linkedin.com/in/donaldvm</span>
+                  </div>
+                  
+                  <p className="text-slate-700 leading-relaxed text-lg mb-6">
+                    Change management and communications professional with <strong>5+ years</strong> driving organizational transformation 
+                    in highly regulated environments. Expertise in scaling teams through periods of rapid growth, building compliance-ready 
+                    communication programs, and developing training initiatives that achieve measurable behavior change.
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {['Change Management', 'Organizational Transformation', 'Regulatory Compliance', 'Training & Development', 'Internal Communications', 'Stakeholder Engagement', 'People Development', 'Cross-functional Collaboration'].map(tag => (
+                      <span key={tag} className="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-sm">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SceneWrapper>
+
+            {/* EXPERTISE */}
+            <SceneWrapper height="1100px">
+              <Tree x={4} size={1.3} />
+              <Tree x={12} size={0.9} variant={1} />
+              <Tree x={86} size={1.1} />
+              <Tree x={94} size={1} variant={1} />
+              
+              <div className="relative z-20 pt-8">
+                <Section title="Expertise" subtitle="Skills & Certifications">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                    
+                    <div style={{display: 'flex', flexDirection: 'row', gap: '40px', marginBottom: '32px'}}>
+                      <div style={{flex: 1}}>
+                        <h3 className="text-xs uppercase tracking-widest text-emerald-600 font-semibold mb-5">Soft Skills</h3>
+                        <ul className="space-y-3">
+                          {['Change Management (ADKAR)', 'Organizational Transformation', 'Stakeholder Engagement', 'Internal Communications', 'Training & Facilitation', 'People Development', 'Cross-functional Collaboration', 'Regulatory Compliance'].map(skill => (
+                            <li key={skill} className="flex items-center gap-3 text-slate-700">
+                              <span className="w-2 h-2 bg-emerald-500 rounded-full flex-shrink-0"></span>
+                              {skill}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div style={{flex: 1}}>
+                        <h3 className="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-5">Hard Skills</h3>
+                        <ul className="space-y-3">
+                          {['Microsoft O365 Suite & Power Automate', 'SharePoint Development', 'Video Production (CapCut)', 'Data Analysis (R, Statistical Analysis)', 'ADKAR Change Management', 'Hybrid Agile Delivery', 'Training Design', 'Security Awareness Programs'].map(skill => (
+                            <li key={skill} className="flex items-center gap-3 text-slate-700">
+                              <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+                              {skill}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="pt-6 border-t border-slate-200">
+                      <h3 className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-6">Certifications & Professional Development</h3>
+                      
+                      <div style={{display: 'flex', flexDirection: 'row', gap: '40px', marginBottom: '24px'}}>
+                        <div style={{flex: 1}}>
+                          <p className="font-medium text-slate-700 mb-3">🤖 AI & Digital Transformation</p>
+                          <ul className="text-slate-600 text-sm space-y-2 ml-6">
+                            <li>• Transform business workflows with generative AI</li>
+                            <li>• Create AI agents with Microsoft Foundry</li>
+                            <li>• Microsoft 365 Copilot administration</li>
+                            <li>• Introduction to AI in Azure</li>
+                          </ul>
+                        </div>
+                        
+                        <div style={{flex: 1}}>
+                          <p className="font-medium text-slate-700 mb-3">🔒 Cybersecurity (TryHackMe)</p>
+                          <p className="text-slate-500 text-xs mb-3 ml-6">100+ modules · Top 3% ranking</p>
+                          <div className="flex flex-wrap gap-2 ml-6">
+                            {['OWASP Top 10', 'Phishing', 'Pentesting', 'OSINT', 'Linux'].map(c => (
+                              <span key={c} className="px-2 py-1 bg-red-50 text-red-600 rounded text-xs">{c}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div style={{display: 'flex', flexDirection: 'row', gap: '40px'}}>
+                        <div style={{flex: 1}}>
+                          <p className="font-medium text-slate-700 mb-3">📊 Change Management & Agile</p>
+                          <ul className="text-slate-600 text-sm space-y-2 ml-6">
+                            <li>• Agile Fundamentals: Scrum & Kanban (Udemy)</li>
+                            <li>• BPMN 2.0 Business Process Management</li>
+                            <li>• UML and Object Oriented Design</li>
+                          </ul>
+                        </div>
+                        
+                        <div style={{flex: 1}}>
+                          <p className="font-medium text-slate-700 mb-3">📣 Communications & Marketing</p>
+                          <ul className="text-slate-600 text-sm space-y-2 ml-6">
+                            <li>• LinkedIn Certified Marketing Insider (2023)</li>
+                            <li>• LinkedIn Marketing Strategy & Content</li>
+                            <li>• HubSpot Inbound Sales & Marketing</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </SceneWrapper>
+
+            {/* OFFICE DISTRICT */}
+            <SceneWrapper height="300px">
+              <OfficeBuilding x={-5} height={120} width={45} color="#64748b" hasAntenna={true} />
+              <OfficeBuilding x={8} height={150} width={50} color="#475569" />
+              <OfficeBuilding x={22} height={100} width={40} color="#94a3b8" />
+              <OfficeBuilding x={35} height={170} width={55} color="#334155" hasAntenna={true} />
+              <OfficeBuilding x={52} height={130} width={45} color="#64748b" />
+              <OfficeBuilding x={65} height={90} width={38} color="#94a3b8" />
+              <OfficeBuilding x={78} height={140} width={48} color="#475569" hasAntenna={true} />
+              <OfficeBuilding x={92} height={110} width={42} color="#64748b" />
+            </SceneWrapper>
+
+            {/* EUROCLEAR */}
+            <SceneWrapper height="1050px">
+              <Building x={-2} height={160} width={55} color="#1a365d" />
+              <BankBuilding x={10} />
+              <Building x={26} height={130} width={48} color="#2c5282" />
+              <Computer x={48} y={78} />
+              <Computer x={58} y={82} />
+              <Computer x={53} y={115} />
+              <Building x={68} height={145} width={52} color="#2b6cb0" />
+              <Building x={84} height={110} width={48} color="#3182ce" />
+              
+              <div className="relative z-20 pt-8">
+                <Section title="Work Experience" subtitle="Where I've made an impact">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg mb-6">
+                    <div className="flex justify-between items-start mb-5">
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-800">Euroclear</h3>
+                        <p className="text-slate-600">CISO Office Analyst · Brussels, Belgium</p>
+                      </div>
+                      <span className="text-sm bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full font-medium">2021 – Present</span>
+                    </div>
+                    
+                    <div className="space-y-5 text-slate-700">
+                      <div>
+                        <h4 className="font-semibold text-emerald-700 mb-2">Change Management & Organizational Transformation</h4>
+                        <p className="text-sm leading-relaxed">Led change management strategy for enterprise-wide transformation supporting cybersecurity maturity program and <strong>8x departmental growth (60 to 500 FTE)</strong>. Applied ADKAR methodology to drive adoption of CISO Plan, IAM transformation, and Data Leakage Prevention rollout.</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-blue-700 mb-2">Regulatory Compliance & Audit Readiness</h4>
+                        <p className="text-sm leading-relaxed">Supported organization in achieving <strong>SWIFT CSP certification</strong> and <strong>ISAE 3402 attestations with zero audit qualifications</strong>. Contributed to bringing organization back into board-defined risk appetite.</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-2">Training & Behavioral Change Programs</h4>
+                        <p className="text-sm leading-relaxed">Designed security awareness training covering phishing, data classification, physical security, and password management. Achieved <strong>&lt;5% phishing click rates</strong> while increasing security incident reporting.</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-orange-700 mb-2">Internal Communications & Engagement</h4>
+                        <p className="text-sm leading-relaxed">Created monthly newsletter reaching <strong>500+ employees with 67%+ open rate</strong>, growing readership from 240 to 500+. Produced engaging 3-minute video content and organized monthly townhalls.</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-teal-700 mb-2">People Development & Innovation</h4>
+                        <p className="text-sm leading-relaxed">Established internship program attracting <strong>3 hackathon-winning interns (1 converted to full-time)</strong>. <strong>Won corporate hackathon</strong> with MVP deployed to 4 customers (€300k budget).</p>
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </SceneWrapper>
+
+            {/* SNCB */}
+            <SceneWrapper height="550px">
+              <Tree x={2} size={1} />
+              <TrainStation x={18} />
+              <Train x={-12} direction={1} />
+              <Tree x={76} size={1.1} variant={1} />
+              <Tree x={88} size={0.9} />
+              <Tree x={95} size={1.2} variant={1} />
+              
+              <div className="relative z-20 pt-8">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                  <div className="flex justify-between items-start mb-5">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-800">SNCB – Belgian Railway Company</h3>
+                      <p className="text-slate-600">Digital Innovation Consultant · via PiP Leuven</p>
+                    </div>
+                    <span className="text-sm bg-red-100 text-red-700 px-4 py-1.5 rounded-full font-medium">2019 – 2020</span>
+                  </div>
+                  
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Conducted comprehensive user research to map pain points in customer communication for train travelers. 
+                    Developed <strong>augmented reality web application proof of concept</strong> to enhance customer communication 
+                    and improve operational efficiency. Built business case presentation demonstrating ROI and implementation feasibility.
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {['AR.JS', 'User Research', 'PoC Development', 'Business Case', 'Web Architecture'].map(tag => (
+                      <span key={tag} className="px-3 py-1.5 bg-red-50 text-red-600 rounded-full text-sm">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SceneWrapper>
+
+            {/* SBB */}
+            <SceneWrapper height="480px">
+              <Office x={6} variant={0} />
+              <Office x={28} variant={1} />
+              <Chatbot x={52} y={95} />
+              <Office x={66} variant={0} />
+              <Tree x={90} size={1.1} />
+              
+              <div className="relative z-20 pt-8">
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                  <div className="flex justify-between items-start mb-5">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-800">SBB Accountancy</h3>
+                      <p className="text-slate-600">Customer Service Innovation Consultant · via DXC Technology</p>
+                    </div>
+                    <span className="text-sm bg-teal-100 text-teal-700 px-4 py-1.5 rounded-full font-medium">2018 – 2019</span>
+                  </div>
+                  
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Designed <strong>chatbot solution</strong> to support customer service agents and provide self-service options, 
+                    improving response times and customer satisfaction. Led stakeholder education program on automation benefits. 
+                    Delivered functional MVP handling routine inquiries, appointment scheduling, and document requests.
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {['Amazon Lex', 'Chatbot Design', 'AWS', 'Stakeholder Education', 'MVP Delivery'].map(tag => (
+                      <span key={tag} className="px-3 py-1.5 bg-teal-50 text-teal-600 rounded-full text-sm">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SceneWrapper>
+
+            {/* EDUCATION */}
+            <SceneWrapper height="500px">
+              <Tree x={2} size={1.1} />
+              <ClassicalSchool x={10} variant={0} />
+              <ClassicalSchool x={45} variant={1} />
+              <Tree x={70} size={0.9} variant={1} />
+              <ClassicalSchool x={75} variant={0} />
+              <Tree x={95} size={1.2} />
+              
+              <div className="relative z-20 pt-8">
+                <Section title="Education" subtitle="Academic background">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                    <div style={{display: 'flex', flexDirection: 'row', gap: '32px'}}>
+                      <div style={{flex: 1}} className="border-l-4 border-amber-500 pl-5">
+                        <h3 className="font-bold text-slate-800 text-lg">Master of Statistics</h3>
+                        <p className="text-slate-600">KU Leuven · 2018–2020</p>
+                        <p className="text-slate-500 text-sm mt-1">Advanced Coursework Completed</p>
+                      </div>
+                      <div style={{flex: 1}} className="border-l-4 border-blue-500 pl-5">
+                        <h3 className="font-bold text-slate-800 text-lg">BSc International Business</h3>
+                        <p className="text-slate-600">Maastricht University · 2013–2016</p>
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </SceneWrapper>
+
+            {/* LANGUAGES */}
+            <SceneWrapper height="380px">
+              <Tree x={5} size={0.95} />
+              <Tree x={12} size={1.15} variant={1} />
+              <Tree x={88} size={1} />
+              <Tree x={94} size={1.2} variant={1} />
+              
+              <div className="relative z-20 pt-8">
+                <Section title="Languages" subtitle="Communication across cultures">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                    <div className="flex justify-center gap-12">
+                      <div className="text-center">
+                        <div className="mb-3 flex justify-center"><FlagNL /></div>
+                        <p className="font-semibold text-slate-800">Dutch</p>
+                        <p className="text-xs text-slate-500">Native</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="mb-3 flex justify-center"><FlagUK /></div>
+                        <p className="font-semibold text-slate-800">English</p>
+                        <p className="text-xs text-slate-500">Fluent</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="mb-3 flex justify-center"><FlagFR /></div>
+                        <p className="font-semibold text-slate-800">French</p>
+                        <p className="text-xs text-slate-500">Native</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="mb-3 flex justify-center"><FlagBR /></div>
+                        <p className="font-semibold text-slate-800">Portuguese</p>
+                        <p className="text-xs text-slate-500">Intermediate</p>
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </SceneWrapper>
+
+            {/* KEY ACHIEVEMENTS */}
+            <SceneWrapper height="620px">
+              <Tree x={4} size={1.2} />
+              <Tree x={92} size={1.1} variant={1} />
+              
+              <div className="relative z-20 pt-8">
+                <Section title="Key Achievements" subtitle="Highlights of my career">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+                    <div style={{display: 'flex', flexDirection: 'row', gap: '16px'}}>
+                      <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: '16px'}}>
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-emerald-50 to-transparent rounded-lg border-l-4 border-emerald-500">
+                          <span className="text-2xl">📊</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">8x Team Growth Management</p>
+                            <p className="text-slate-600 text-sm">60→500 FTE with successful change management</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent rounded-lg border-l-4 border-blue-500">
+                          <span className="text-2xl">✅</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">Zero Audit Qualifications</p>
+                            <p className="text-slate-600 text-sm">SWIFT CSP and ISAE 3402 certifications</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-transparent rounded-lg border-l-4 border-purple-500">
+                          <span className="text-2xl">📈</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">67%+ Communication Engagement</p>
+                            <p className="text-slate-600 text-sm">Effective stakeholder communication</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: '16px'}}>
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-orange-50 to-transparent rounded-lg border-l-4 border-orange-500">
+                          <span className="text-2xl">🎯</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">&lt;5% Phishing Click Rate</p>
+                            <p className="text-slate-600 text-sm">Evidence-based training programs</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-teal-50 to-transparent rounded-lg border-l-4 border-teal-500">
+                          <span className="text-2xl">👥</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">100% Regulator Satisfaction</p>
+                            <p className="text-slate-600 text-sm">Successful regulatory reviews</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-pink-50 to-transparent rounded-lg border-l-4 border-pink-500">
+                          <span className="text-2xl">🏆</span>
+                          <div>
+                            <p className="font-semibold text-slate-800">Top Talent Acquisition</p>
+                            <p className="text-slate-600 text-sm">3 hackathon winners, 33% conversion</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </SceneWrapper>
+
+            {/* CONNECT */}
+            <SceneWrapper height="100vh">
+              <Tree x={4} size={1.4} />
+              <Tree x={14} size={1} variant={1} />
+              <Tree x={82} size={1.2} />
+              <Tree x={92} size={1.1} variant={1} />
+              
+              <div className="relative z-20 flex flex-col justify-center h-full pb-32">
+                <div className="bg-emerald-600 rounded-2xl p-10 text-white shadow-xl">
+                  <h2 className="text-4xl font-bold mb-2">Thanks for joining the ride!</h2>
+                  <p className="text-emerald-100 text-lg mb-8">I hope you enjoyed biking through my career journey.</p>
+                  
+                  <div style={{display: 'flex', flexDirection: 'row', gap: '16px', marginBottom: '40px'}}>
+                    <div style={{flex: 1}} className="bg-white/15 rounded-xl p-5 text-center">
+                      <p className="text-4xl font-bold">5+</p>
+                      <p className="text-emerald-200 text-sm">Years Experience</p>
+                    </div>
+                    <div style={{flex: 1}} className="bg-white/15 rounded-xl p-5 text-center">
+                      <p className="text-4xl font-bold">67%</p>
+                      <p className="text-emerald-200 text-sm">Engagement Rate</p>
+                    </div>
+                    <div style={{flex: 1}} className="bg-white/15 rounded-xl p-5 text-center">
+                      <p className="text-4xl font-bold">500+</p>
+                      <p className="text-emerald-200 text-sm">Team Scaled To</p>
+                    </div>
+                    <div style={{flex: 1}} className="bg-white/15 rounded-xl p-5 text-center">
+                      <p className="text-4xl font-bold">100+</p>
+                      <p className="text-emerald-200 text-sm">Security Modules</p>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-emerald-500 pt-8">
+                    <h3 className="text-2xl font-bold mb-4">Let's Connect</h3>
+                    <div className="flex flex-wrap gap-4 mb-8">
+                      <a href="mailto:vanmarckedonald@gmail.com" className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">
+                        📧 vanmarckedonald@gmail.com
+                      </a>
+                      <a href="https://linkedin.com/in/donaldvm" target="_blank" className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">
+                        🔗 linkedin.com/in/donaldvm
+                      </a>
+                      <span className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-lg">
+                        📱 +32 486 093 411
+                      </span>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                      <a href="#" className="flex items-center gap-3 bg-white text-emerald-700 hover:bg-emerald-50 px-6 py-3 rounded-xl font-semibold transition shadow-lg">
+                        <DownloadIcon />
+                        Download CV
+                      </a>
+                      <a href="#" className="flex items-center gap-3 bg-emerald-700 hover:bg-emerald-800 px-6 py-3 rounded-xl font-semibold transition shadow-lg">
+                        <DownloadIcon />
+                        Download README
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </SceneWrapper>
+
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<BikeResume />);
+  </script>
+</body>
+</html>
